@@ -19,6 +19,7 @@ public class Level : MonoBehaviour
     private int pipesSpawned;
     private static Level instance;
     private int pipesPassedCount;
+    private State state;
 
     private List<Transform> pipeList;
 
@@ -30,11 +31,19 @@ public class Level : MonoBehaviour
         Impossible
     }
 
+    private enum State
+    {
+        WaitingToStart,
+        Playing, 
+        CharacterDead,
+    }
+
     private void Awake()
     {
         instance = this;
         pipeList = new List<Transform>();
         SetDifficulty(Difficulty.Easy);
+        state = State.WaitingToStart;
     }
 
     private void Start()
@@ -42,13 +51,36 @@ public class Level : MonoBehaviour
         //CreatePipe(50, 0, true);
         //CreatePipe(50, 10, false);
         //CreateGapPipes(50f, 20f, 30f);
+        Character.GetInstance().OnDied += Character_OnDied;
+        Character.GetInstance().OnStartPlaying += Character_OnStartPlaying;
     }
 
     private void Update()
     {
-        HandlePipeMovement();
-        HandlePipeSpawning();
+        if (state == State.Playing)
+        {
+            HandlePipeMovement();
+            HandlePipeSpawning();
+        }
     }
+
+    private void Character_OnDied(object sender, System.EventArgs e)
+    {
+        Debug.Log("Dead!");
+        state = State.CharacterDead;
+        //StartCoroutine(WaitCoroutine());
+    }
+
+    private void Character_OnStartPlaying(object sender, System.EventArgs e)
+    {
+        state = State.Playing;
+    }
+
+    //private IEnumerator WaitCoroutine()
+    //{
+    //    yield return new WaitForSeconds(1);
+    //    UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
+    //}
 
     private void HandlePipeMovement()
     {
@@ -84,7 +116,6 @@ public class Level : MonoBehaviour
             float maxHeight = totalHeight - gapSize * 0.5f - heightEdgeLimit;
             float height = Random.Range(minHeight, maxHeight);
             CreateGapPipes(height, gapSize, PIPE_SPAWN_X_POSITION);
-            Debug.Log("HEIGHT " + height);
         }
     }
 
@@ -140,7 +171,6 @@ public class Level : MonoBehaviour
         }
         pipe.position = new Vector2(xPosition, pipeYPosition);
         pipeList.Add(pipe_instance);
-        Debug.Log("Pipe added to list");
 
         SpriteRenderer pipeSpriteRenderer = pipe.GetComponent<SpriteRenderer>();
         pipeSpriteRenderer.size = new Vector2(pipeWidth, height);
