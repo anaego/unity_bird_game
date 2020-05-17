@@ -16,7 +16,6 @@ public class GameOverWindow : MonoBehaviour
         {
             Loader.Load(Loader.Scene.GameScene);
         });
-        //Character.GetInstance().OnDied += Bird_OnDied;
         Debug.Log("IN GAMEOVER AWAKE - AFTER ADDING EVENT");
     }
 
