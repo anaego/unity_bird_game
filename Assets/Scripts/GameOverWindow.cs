@@ -9,39 +9,39 @@ public class GameOverWindow : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("IN GAMEOVER AWAKE");
         scoreText = transform.Find("ScoreText").GetComponent<Text>();
         Button button = transform.Find("RetryBtn").Find("Button").GetComponent<Button>();
         button.onClick.AddListener(() =>
         {
             Loader.Load(Loader.Scene.GameScene);
         });
-        Debug.Log("IN GAMEOVER AWAKE - AFTER ADDING EVENT");
+
+        Button menu_button = transform.Find("MainMenuBtn").Find("Button").GetComponent<Button>();
+        menu_button.onClick.AddListener(() =>
+        {
+            Loader.Load(Loader.Scene.MainMenu);
+        });
     }
 
     private void Start()
     {
-        Debug.Log("IN GAMEOVER START");
         Character.GetInstance().OnDied += Bird_OnDied;
         Hide();
     }
 
     private void Bird_OnDied(object sender, System.EventArgs e)
     {
-        Debug.Log("IN GAMEOVER BIRD ONDIED");
         Show();
         scoreText.text = (Level.GetInstance().GetPipesPassedCount() / 2).ToString();
     }
 
     private void Hide()
     {
-        Debug.Log("IN HIDE");
         gameObject.SetActive(false);
     }
 
     private void Show()
     {
-        Debug.Log("IN SHOW");
         gameObject.SetActive(true);
     }
 }

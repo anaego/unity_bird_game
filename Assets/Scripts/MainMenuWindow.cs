@@ -7,10 +7,15 @@ public class MainMenuWindow : MonoBehaviour
 {
     private void Awake()
     {
-        Button button = transform.Find("PlayBtn").Find("Button").GetComponent<Button>();
-        button.onClick.AddListener(() =>
+        Button play_button = transform.Find("PlayBtn").Find("Button").GetComponent<Button>();
+        play_button.onClick.AddListener(() =>
         {
             Loader.Load(Loader.Scene.GameScene);
+        });
+        Button quit_button = transform.Find("QuitBtn").Find("Button").GetComponent<Button>();
+        quit_button.onClick.AddListener(() =>
+        {
+            Application.Quit();
         });
     }
 }

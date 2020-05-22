@@ -48,7 +48,7 @@ public class Character : MonoBehaviour {
                     state = State.Playing;
                     rb.bodyType = RigidbodyType2D.Dynamic;
                     Jump();
-                    if (OnStartPlaying != null) OnStartPlaying(this, EventArgs.Empty);
+                    OnStartPlaying?.Invoke(this, EventArgs.Empty);
                 }
                 break;
             case State.Playing:
@@ -75,31 +75,11 @@ public class Character : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collider)
     {
         rb.bodyType = RigidbodyType2D.Static;
-        if (OnDied != null) OnDied(this, EventArgs.Empty);
+        OnDied?.Invoke(this, EventArgs.Empty);
     }
 
 	public void Death() {
 		rb.velocity = Vector3.zero;
 		transform.position = new Vector2 (0, 0);
-        // BuildLevel();
 	}
-
-    //public void BuildLevel()
-    //{
-    //    Instantiate(pipe_down, new Vector3(14, 12), transform.rotation);
-    //    Instantiate(pipe_up, new Vector3(14, -11), transform.rotation);
-
-    //    Instantiate(pipe_down, new Vector3(26, 14), transform.rotation);
-    //    Instantiate(pipe_up, new Vector3(26, -10), transform.rotation);
-
-    //    Instantiate(pipe_down, new Vector3(38, 10), transform.rotation);
-    //    Instantiate(pipe_up, new Vector3(38, -14), transform.rotation);
-
-    //    Instantiate(pipe_down, new Vector3(50, 16), transform.rotation);
-    //    Instantiate(pipe_up, new Vector3(50, -8), transform.rotation);
-
-    //    Instantiate(pipe_down, new Vector3(61, 11), transform.rotation);
-    //    Instantiate(pipe_up, new Vector3(61, -13), transform.rotation);
-
-    //}
 }

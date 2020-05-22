@@ -66,7 +66,6 @@ public class Level : MonoBehaviour
 
     private void Character_OnDied(object sender, System.EventArgs e)
     {
-        Debug.Log("Dead!");
         state = State.CharacterDead;
         //StartCoroutine(WaitCoroutine());
     }
