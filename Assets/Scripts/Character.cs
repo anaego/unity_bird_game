@@ -37,8 +37,6 @@ public class Character : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        // BuildLevel();
-        // rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
         switch (state)
         {
             default:
@@ -56,10 +54,6 @@ public class Character : MonoBehaviour {
                 {
                     Jump();
                 }
-                if (transform.position.y > 18 || transform.position.y < -19)
-                {
-                    // Death ();
-                }
                 break;
             case State.Dead:
                 break;
@@ -68,7 +62,6 @@ public class Character : MonoBehaviour {
 
     public void Jump()
     {
-        // rb.velocity = new Vector2(rb.velocity.x, flapHeight);
         rb.velocity = Vector2.up * flapHeight;
     }
 

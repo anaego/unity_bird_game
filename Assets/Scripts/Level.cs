@@ -48,9 +48,6 @@ public class Level : MonoBehaviour
 
     private void Start()
     {
-        //CreatePipe(50, 0, true);
-        //CreatePipe(50, 10, false);
-        //CreateGapPipes(50f, 20f, 30f);
         Character.GetInstance().OnDied += Character_OnDied;
         Character.GetInstance().OnStartPlaying += Character_OnStartPlaying;
     }
@@ -67,19 +64,12 @@ public class Level : MonoBehaviour
     private void Character_OnDied(object sender, System.EventArgs e)
     {
         state = State.CharacterDead;
-        //StartCoroutine(WaitCoroutine());
     }
 
     private void Character_OnStartPlaying(object sender, System.EventArgs e)
     {
         state = State.Playing;
     }
-
-    //private IEnumerator WaitCoroutine()
-    //{
-    //    yield return new WaitForSeconds(1);
-    //    UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
-    //}
 
     private void HandlePipeMovement()
     {
